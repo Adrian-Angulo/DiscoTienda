@@ -493,6 +493,44 @@ public class Discotienda
         return false;
     }
     
+    // -----------------------------------------------------------------
+    // Trabajo de Adrian Castillo
+    // -----------------------------------------------------------------
+    
+    /**
+     * Generar informes de discos en la discoteca
+     * @throws FileNotFoundException
+     */
+    public void generarInformeDiscos() throws FileNotFoundException{
+    	// crear el archivo con la clase FILE
+    	File archivo = new File("./data/reporteDiscos.txt");
+    	
+    	//crear pluma para escribir el archivo
+    	PrintWriter pluma = new PrintWriter(archivo);
+    	
+    	// escribir con la pluma el archivo
+    	pluma.println("Reporte de discos");
+    	pluma.println("==================");
+    	
+    	
+    	//escribir un reporte de discos con nombre, artista y genero
+    	//=========================================================
+    	
+    	// recorrido total sobre discos
+    	for (int i = 0; i < discos.size(); i++) {
+			//extraer informacion de cada disco
+    		Disco miDisco = (Disco)discos.get(i);
+    		
+    		//escribir con la pluma la informacion requerida
+    		pluma.println(
+    				"Nombre:" +miDisco.darNombreDisco()+
+    				"Artista" +miDisco.darArtista()+
+    				"Genero" +miDisco.darGenero()
+    				);
+		}
+    	//cerra la pluma
+    	pluma.close();
+    }
 
 
     // -----------------------------------------------------------------
@@ -505,7 +543,12 @@ public class Discotienda
      */
     public String metodo1( )
     {
-        return "respuesta 1";
+    	 try {
+ 			generarInformeDiscos();
+ 			return "Reporte generado satisfactoriamente";
+ 		} catch (Exception e) {
+ 			return "error fatal : ( "+e.getMessage();
+ 		}
     }
 
     /**
