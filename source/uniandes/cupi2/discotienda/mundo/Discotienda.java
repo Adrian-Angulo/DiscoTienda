@@ -532,6 +532,52 @@ public class Discotienda
     	pluma.close();
     }
 
+    /**
+    * Generar informes de discos costoso
+    * @throws Exception 
+    */
+   public void generarInformeDiscosEconomicos() throws Exception{
+   	// crear el archivo con la clase FILE
+   	File archivo = new File("./data/discosCostosos.txt");
+   	
+   	//crear pluma para escribir el archivo
+   	PrintWriter pluma = new PrintWriter(archivo);
+   	
+   	// escribir con la pluma el archivo
+   	pluma.println("Reporte de discos Economicos");
+   	pluma.println("==================");
+   	boolean hayDiscos = false;
+   	
+   	//escribir un reporte de discos con nombre, artista, genero, precio 
+   	//=========================================================
+ 
+   	// recorrido total sobre discos
+   	for (int i = 0; i < discos.size(); i++) {
+			//extraer informacion de cada disco
+   		Disco miDisco = (Disco)discos.get(i);
+   		
+   		//evaluar si el genero del disco es igual a Pop o Rock
+   		if(miDisco.darGenero().equalsIgnoreCase("Pop")|| miDisco.darGenero().equalsIgnoreCase("Rock")){
+   			//evaluar si el precio del disco es menor a 1000
+   			if(miDisco.darPrecioDisco()<=1000) {
+   				pluma.println(
+   						" Nombre: " +miDisco.darNombreDisco()+
+   						" Artista: " +miDisco.darArtista()+
+   						" Genero: " +miDisco.darGenero()+
+   						" Precio: " +miDisco.darPrecioDisco()
+   						);
+   				hayDiscos = true;
+   			}
+   		}
+   		
+   	}		
+   	//cerra la pluma
+   	pluma.close();
+   	if(!hayDiscos) {
+			throw new Exception("No Existe disco que cumplan con las condiciones");
+		}
+   }
+
 
     // -----------------------------------------------------------------
     // Puntos de Extensi�n
@@ -557,7 +603,12 @@ public class Discotienda
      */
     public String metodo2( )
     {
-    	return "respuesta 2";
+        try {
+			generarInformeDiscosEconomicos();
+			return "Reporte generado satisfactoriamente";
+		} catch (Exception e) {
+			return "error fatal : ( "+e.getMessage();
+		} 
     }
 
     /**
